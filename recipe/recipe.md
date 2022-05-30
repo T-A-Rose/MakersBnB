@@ -59,6 +59,26 @@ transitions between pages — those are the most critical part._
 
 ## 3. Design the Database
 
+
+CLIENT TABLE
+
+client(add another field later)
+id(SERIAL PRIMARY KEY)	username(TEXT NOT NULL)	password(TEXT NOT NULL)	contact(TEXT NOT NULL)	email(TEXT NOT NULL)
+1	Endre	nopassword	075987654	iwonttellyou@gmail.com
+2	Tom	yespassword	075123456	iwilltellyou@gmail.com	
+3 	Nathan	maybepassword	075987123	imaytellyou@gmail.com	
+4	Mohammed	thereisnopassword	075676666	thereisnoemail@gmail.com
+
+
+SPACES TABLE
+properties
+id(SERIAL PRIMARY KEY)	property_name(TEXT NOT NULL)	description(TEXT NOT NULL)	price(FLOAT NOT NULL)	availability_start(DATE NOT NULL)	availability_end(DATE NOT NULL)
+1	"Makers dungeon"	"Sometimes dark sometimes bright"	89	2022-04-20	2022-07-15
+2	"Openbet office"	"Unspecified"	67	2022-07-15	2024-07-15
+3	"Capgemini"	"Very good, very chill"	95	2022-07-15	2022-06-30
+4	"UK Hydrographics"	"Such place, very wow"	100	2022-08-11	2023-09-10
+
+
 _Design the data tables that will store all of the information your application
 manages. Include the data types and examples of three rows. Consider use Google
 Sheets or [AsciiTable](https://ozh.github.io/ascii-tables/) to do this._
