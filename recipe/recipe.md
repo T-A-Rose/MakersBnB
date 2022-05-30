@@ -2,6 +2,51 @@
 
 ## 1. Describe the Problem
 
+1. The client has requested that they can add a new space to be booked.
+Requirements: The user has to have signed up to the site in order to add a space which can be booked.
+
+
+2. The client has requested that they're able to add more than one property to their account.
+Requirement: The user should be able to add any number of properties available to be booked.
+
+
+3. Users should be able to name their space, provide a short description of the space and a price per night
+Requirements: The user wants to be able to name their space, provide a short description of the space and a price per night.
+
+
+4. Users should be able to offer a range of dates when their space is available to book
+Requirements: Have a date selector that will show when the property is available to be booked.
+
+5. Any signed up user can request to hire any space for one night, and this has to be approved by the user that owns the space
+Requirements: Once the owner receives a booking request, they have to approve the booking before the property is booked.
+
+6. Nights that have already been booked shouldn't allow other users to book it
+Requirements: When the property is booked, during those dates the property should not be visible to other users trying to book it.
+
+7. Until a user has had a confirmation, the space is still available to be booked.
+Requirements: The owner has to approve the booking before the booking is confirmed, meaning the place can still be booked until this has happened.
+
+
+
+#OH BOY
+Users should receive an email whenever any of the following happens:
+They sign up
+They create a space
+They update a space
+A user requests to book their space
+They confirm a request
+They request to book a space
+Their request to book a space is confirmed
+Their request to book a space is denied
+Users should receive a text message to a provided number whenever one of the following happens:
+A user requests to book their space
+Their request to book a space is confirmed
+Their request to book a space is denied
+A ‘chat’ functionality once a space has been booked, allowing users whose space-booking request has been confirmed to chat with the user that owns that space
+Basic payment implementation though Stripe.
+
+
+
 _Put or write the user stories here. Add any clarifying notes you might have._
 
 ## 2. Design the Interface
