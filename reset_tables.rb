@@ -1,4 +1,4 @@
-$:.unshift File.join(File.dirname(__FILE__), 'lib')
+$:.unshift File.join(File.dirname(__FILE__), "lib")
 require "database_connection"
 
 # This file sets up the database tables. If you change any of the contents
@@ -13,6 +13,25 @@ def reset_tables(db)
   # Each one should be a pair of lines:
   #   db.run("DROP TABLE IF EXISTS ...;")
   #   db.run("CREATE TABLE ... (id SERIAL PRIMARY KEY, ...);")
+
+  db.run("DROP TABLE IF EXISTS properties;")
+  db.run("CREATE TABLE properties (
+    id SERIAL PRIMARY KEY,
+    property_name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    price FLOAT NOT NULL,
+    availability_start DATE NOT NULL,
+    availability_end DATE NOT NULL
+    );")
+
+  # db.run("DROP TABLE IF EXISTS users;")
+  # db.run("CREATE TABLE users (
+  #   id SERIAL PRIMARY KEY,
+  #   username TEXT NOT NULL,
+  #   password TEXT NOT NULL,
+  #   contact TEXT NOT NULL
+  #   email TEXT NOT NULL
+  #   );")
 end
 
 dev_db = DatabaseConnection.new("localhost", "web_application_dev")
