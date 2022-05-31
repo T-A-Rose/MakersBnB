@@ -1,37 +1,12 @@
 $:.unshift File.join(File.dirname(__FILE__), "lib")
 require "database_connection"
 
-# This file sets up the database tables. If you change any of the contents
-# of this file, you should rerun `ruby reset_tables.rb` to ensure that your
-# database tables are re-created.
-
 def reset_tables(db)
-  db.run("DROP TABLE IF EXISTS animals;")
-  db.run("CREATE TABLE animals (id SERIAL PRIMARY KEY, species TEXT NOT NULL);")
-
-  # Add your table creation SQL here
-  # Each one should be a pair of lines:
-  #   db.run("DROP TABLE IF EXISTS ...;")
-  #   db.run("CREATE TABLE ... (id SERIAL PRIMARY KEY, ...);")
+  db.run("DROP TABLE IF EXISTS client;")
+  db.run("CREATE TABLE client (id SERIAL PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL, name TEXT NOT NULL, contact_number TEXT NOT NULL, email TEXT NOT NULL);")
 
   db.run("DROP TABLE IF EXISTS properties;")
-  db.run("CREATE TABLE properties (
-    id SERIAL PRIMARY KEY,
-    property_name TEXT NOT NULL,
-    description TEXT NOT NULL,
-    price FLOAT NOT NULL,
-    availability_start DATE NOT NULL,
-    availability_end DATE NOT NULL
-    );")
-
-  # db.run("DROP TABLE IF EXISTS users;")
-  # db.run("CREATE TABLE users (
-  #   id SERIAL PRIMARY KEY,
-  #   username TEXT NOT NULL,
-  #   password TEXT NOT NULL,
-  #   contact TEXT NOT NULL
-  #   email TEXT NOT NULL
-  #   );")
+  db.run("CREATE TABLE properties (id SERIAL PRIMARY KEY, property_name TEXT NOT NULL, description TEXT NULL, price FLOAT NOT NULL, availablity_start TEXT NOT NULL, availablity_end TEXT NOT NULL")
 end
 
 dev_db = DatabaseConnection.new("localhost", "web_application_dev")

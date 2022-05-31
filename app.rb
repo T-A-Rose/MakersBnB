@@ -32,12 +32,28 @@ class WebApplicationServer < Sinatra::Base
     $global[:animals_table] ||= AnimalsTable.new($global[:db])
   end
 
+  def makersBnB_table
+    $global[:makersBnB_table] ||= MakersBnBTable.new($global[:db])
+  end
+
   # Start your server using `rackup`.
   # It will sit there waiting for requests. It isn't broken!
 
   # YOUR CODE GOES BELOW THIS LINE
 
-  # ...
+  get '/MakersBnB' do
+    erb :makersBnB_login, locals: { makersbnb: makersBnB_table.list }
+  end
+
+  get '/MakersBnB/new_user'
+    erb :new_user
+  end
+
+  post '/MakersBnB' do
+    temp_variable = PropertyListing.new(params[:Test])
+    listing_table.add(Temp_variable)
+    redirect '/MakersBnB'
+  end
 
   # EXAMPLE ROUTES
 
