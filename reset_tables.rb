@@ -1,4 +1,4 @@
-$:.unshift File.join(File.dirname(__FILE__), 'lib')
+$:.unshift File.join(File.dirname(__FILE__), "lib")
 require "database_connection"
 
 def reset_tables(db)
@@ -7,7 +7,6 @@ def reset_tables(db)
 
   db.run("DROP TABLE IF EXISTS properties;")
   db.run("CREATE TABLE properties (id SERIAL PRIMARY KEY, property_name TEXT NOT NULL, description TEXT NULL, price FLOAT NOT NULL, availablity_start TEXT NOT NULL, availablity_end TEXT NOT NULL")
-
 end
 
 dev_db = DatabaseConnection.new("localhost", "web_application_dev")
