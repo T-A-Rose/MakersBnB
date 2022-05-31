@@ -23,6 +23,15 @@ def reset_tables(db)
     availability_start DATE NOT NULL,
     availability_end DATE NOT NULL
     );")
+
+  # db.run("DROP TABLE IF EXISTS users;")
+  # db.run("CREATE TABLE users (
+  #   id SERIAL PRIMARY KEY,
+  #   username TEXT NOT NULL,
+  #   password TEXT NOT NULL,
+  #   contact TEXT NOT NULL
+  #   email TEXT NOT NULL
+  #   );")
 end
 
 dev_db = DatabaseConnection.new("localhost", "web_application_dev")
