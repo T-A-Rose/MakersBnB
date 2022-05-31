@@ -6,7 +6,7 @@ def reset_tables(db)
   db.run("CREATE TABLE client (id SERIAL PRIMARY KEY, username TEXT NOT NULL, password TEXT NOT NULL, name TEXT NOT NULL, contact_number TEXT NOT NULL, email TEXT NOT NULL);")
 
   db.run("DROP TABLE IF EXISTS properties;")
-  db.run("CREATE TABLE properties (id SERIAL PRIMARY KEY, property_name TEXT NOT NULL, description TEXT NULL, price FLOAT NOT NULL, availablity_start TEXT NOT NULL, availablity_end TEXT NOT NULL")
+  db.run("CREATE TABLE properties (id SERIAL PRIMARY KEY, property_name TEXT NOT NULL, description TEXT NOT NULL, price FLOAT NOT NULL, availability_start DATE NOT NULL, availability_end DATE NOT NULL);")
 end
 
 dev_db = DatabaseConnection.new("localhost", "web_application_dev")

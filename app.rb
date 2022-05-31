@@ -7,6 +7,9 @@ require 'sinatra/reloader'
 require "database_connection"
 require "animals_table"
 require "animal_entity"
+require "properties_entity"
+require "properties_table"
+require "date_handler"
 
 class WebApplicationServer < Sinatra::Base
   # This line allows us to send HTTP Verbs like `DELETE` using forms
@@ -32,8 +35,8 @@ class WebApplicationServer < Sinatra::Base
     $global[:animals_table] ||= AnimalsTable.new($global[:db])
   end
 
-  def makersBnB_table
-    $global[:makersBnB_table] ||= MakersBnBTable.new($global[:db])
+  def makersbnb_table
+    $global[:makersbnb_table] ||= PropertiesTable.new($global[:db])
   end
 
   # Start your server using `rackup`.
@@ -41,19 +44,28 @@ class WebApplicationServer < Sinatra::Base
 
   # YOUR CODE GOES BELOW THIS LINE
 
-  get '/MakersBnB' do
-    erb :makersBnB_login, locals: { makersbnb: makersBnB_table.list }
+  get '/Makersbnb' do
+    erb :makersbnb_login, locals: { properties: makersbnb_table.list }
   end
 
-  get '/MakersBnB/new_user'
+  get '/Makersbnb/new_user' do
     erb :new_user
   end
 
-  post '/MakersBnB' do
-    temp_variable = PropertyListing.new(params[:Test])
-    listing_table.add(Temp_variable)
-    redirect '/MakersBnB'
+  post '/Makersbnb' do
+    properties_entity = PropertiesEntity.new(property_name: params[:property_name], 
+    description: params[:description],
+    price: params[:price], 
+    availability_start: params[:availability_start],
+    availability_end: params[:availability_end])
+    makersbnb_table.add(properties_entity)
+    redirect '/Makersbnb'
   end
+
+  get '/Makersbnb/new_property' do
+    erb :new_property
+  end
+
 
   # EXAMPLE ROUTES
 
