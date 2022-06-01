@@ -11,6 +11,17 @@ class UsersTable
            end
   end
 
+  def add(user)
+    result = @db.run("INSERT INTO users 
+    (username, password, contact, email)
+    VALUES ($1, $2, $3, $4) RETURNING id;",
+                     [user.username,
+                      user.password,
+                      user.contact,
+                      user.email])
+    return result[0]["id"]
+  end
+
   def row_to_object(row)
     return UsersEntity.new(
              id: row["id"],
