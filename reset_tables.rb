@@ -2,14 +2,6 @@ $:.unshift File.join(File.dirname(__FILE__), "lib")
 require "database_connection"
 
 def reset_tables(db)
-  db.run("DROP TABLE IF EXISTS client;")
-  db.run("CREATE TABLE client (id SERIAL PRIMARY KEY,
-   username TEXT NOT NULL, 
-   password TEXT NOT NULL, 
-   name TEXT NOT NULL, 
-   contact_number TEXT NOT NULL, 
-   email TEXT NOT NULL
-   );")
 
   db.run("DROP TABLE IF EXISTS properties;")
   db.run("CREATE TABLE properties (
@@ -26,8 +18,8 @@ def reset_tables(db)
     id SERIAL PRIMARY KEY, 
     username TEXT NOT NULL, 
     password TEXT NOT NULL, 
-    contact TEXT NOT NULL, 
-    email TEXT NOT NULL,
+    contact TEXT NULL, 
+    email TEXT NULL
     );")
 end
 

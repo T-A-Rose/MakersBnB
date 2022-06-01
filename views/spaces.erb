@@ -1,0 +1,20 @@
+<style>
+body {
+  background-image: url('https://wallpaperaccess.com/full/1347632.jpg');
+}
+</style>
+<u><h1 style = "text-align: center;"> Current properties available to book</h1>
+  <% properties.each_with_index do |listing| %>
+  <article>
+    <u><h2 style ="text-align: center;"><%= listing.property_name %>! </h2>
+    <h4><u> Property name</u>: <%= listing.property_name %></h4>
+    <u><h4> Property description</u>: <%= listing.description%></h4>
+    <u><h4> Property price</u>: <%= listing.price %></h4>
+
+    <p>
+      <a href="/MakersBnB/<%= listing.id %>/booking">
+        <button>Book stay at: <%= listing.property_name%></button>
+      </a>
+    </p>
+  </article>
+  <%end%>

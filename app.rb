@@ -10,6 +10,8 @@ require "animal_entity"
 require "properties_entity"
 require "properties_table"
 require "date_handler"
+require "users_entity"
+require "users_table"
 
 class WebApplicationServer < Sinatra::Base
   # This line allows us to send HTTP Verbs like `DELETE` using forms
@@ -35,8 +37,12 @@ class WebApplicationServer < Sinatra::Base
     $global[:animals_table] ||= AnimalsTable.new($global[:db])
   end
 
-  def makersbnb_table
-    $global[:makersbnb_table] ||= PropertiesTable.new($global[:db])
+  def makersbnb_property_table
+    $global[:makersbnb_property_table] ||= PropertiesTable.new($global[:db])
+  end
+
+  def makersbnb_users_table
+    $global[:makersbnb_users_table] ||= UsersTable.new($global[:db])
   end
 
   # Start your server using `rackup`.
@@ -45,11 +51,11 @@ class WebApplicationServer < Sinatra::Base
   # YOUR CODE GOES BELOW THIS LINE
 
   get '/Makersbnb' do
-    erb :makersbnb_login, locals: { properties: makersbnb_table.list }
+    erb :makersBnB_login, locals: { logins: makersbnb_users_table.list }
   end
 
-  get '/Makersbnb/new_user' do
-    erb :new_user
+  get '/Makersbnb/signup' do
+    erb :signup
   end
 
   post '/Makersbnb' do
@@ -58,9 +64,20 @@ class WebApplicationServer < Sinatra::Base
     price: params[:price], 
     availability_start: params[:availability_start],
     availability_end: params[:availability_end])
-    makersbnb_table.add(properties_entity)
+    makersbnb_property_table.add(properties_entity)
     redirect '/Makersbnb'
   end
+
+  post '/Makersbnb' do
+    users_entity = UsersEntity.new(username: params[:username], 
+    password: params[:password],
+    contact: params[:contact], 
+    email: params[:email]
+    )
+    makersbnb_users_table.add(users_entity)
+    redirect '/Makersbnb/new_property'
+  end
+
 
   get '/Makersbnb/new_property' do
     erb :new_property

@@ -1,25 +1,27 @@
-<% if properties.empty? %>
-  <h1 style = "text-align: center;">List your advert here!</h1>
-  There are no logins currently, would you like to create one?
+<style>
+body {
+  background-image: url('https://wallpaperaccess.com/full/1347632.jpg');
+}
+</style>
+<div id="container">
+  <form action ="/Makersbnb/signup" method="GET">
+    <button type="button signup-button" id="but_signup" >Signup</button>
+  </form>
+</div>
+<% if !logins.empty? %>
+  <form action ="/Makersbnb" method="POST">
     <p>
-      <a href="/Makersbnb/new_user">
-        <button> Signup here </button>
-      </a>
+      <label for="username">Username:</label>
+      <br>
+      <input type="text" id="username" name="username">
     </p>
-<%else%>
-  <u><h1 style = "text-align: center;"> Current properties available to book</h1>
-  <% properties.each_with_index do |listing| %>
-  <article>
-    <u><h2 style ="text-align: center;"><%= listing.property_name %>! </h2>
-    <h4><u> Property name</u>: <%= listing.property_name %></h4>
-    <u><h4> Propety description</u>: <%= listing.description%></h4>
-    <u><h4> Property price</u>: <%= listing.price %></h4>
+    <p>
+      <label for="password">Password:</label>
+      <br>
+      <input type="text" id="password" name="password">
+    </p>
 
-    <p>
-      <a href="/MakersBnB/<%= listing.id %>/booking">
-        <button>Book stay at: <%= listing.property_name%></button>
-      </a>
-    </p>
-  </article>
-  <%end%>
+    <form action = "/Makersbnb" method="POST">
+      <button type="button login-button" id="but_login" >Login</button>
+    </form>
 <%end%>
