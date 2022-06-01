@@ -2,14 +2,14 @@ $:.unshift File.join(File.dirname(__FILE__), "lib")
 require "database_connection"
 
 def reset_tables(db)
-  db.run("DROP TABLE IF EXISTS client;")
-  db.run("CREATE TABLE client (id SERIAL PRIMARY KEY,
-   username TEXT NOT NULL, 
-   password TEXT NOT NULL, 
-   name TEXT NOT NULL, 
-   contact_number TEXT NOT NULL, 
-   email TEXT NOT NULL
-   );")
+  db.run("DROP TABLE IF EXISTS users CASCADE;")
+  db.run("CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL,
+    contact TEXT NOT NULL,
+    email TEXT NOT NULL
+    );")
 
   db.run("DROP TABLE IF EXISTS properties;")
   db.run("CREATE TABLE properties (
@@ -18,16 +18,9 @@ def reset_tables(db)
     description TEXT NOT NULL,
     price FLOAT NOT NULL, 
     availability_start DATE NOT NULL, 
-    availability_end DATE NOT NULL
-    );")
-
-  db.run("DROP TABLE IF EXISTS users;")
-  db.run("CREATE TABLE users (
-    id SERIAL PRIMARY KEY, 
-    username TEXT NOT NULL, 
-    password TEXT NOT NULL, 
-    contact TEXT NOT NULL, 
-    email TEXT NOT NULL,
+    availability_end DATE NOT NULL,
+    user_id INT NOT NULL,
+    CONSTRAINT id_of_user FOREIGN KEY(user_id) REFERENCES users(id)
     );")
 end
 

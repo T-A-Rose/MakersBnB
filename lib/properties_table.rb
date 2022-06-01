@@ -5,13 +5,14 @@ class PropertiesTable
 
   def add(property)
     result = @db.run("INSERT INTO properties 
-    (property_name, description, price, availability_start, availability_end) 
-    VALUES ($1, $2, $3, $4, $5) RETURNING id;",
+    (property_name, description, price, availability_start, availability_end, user_id) 
+    VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;",
                      [property.property_name,
                       property.description,
                       property.price,
                       property.availability_start,
-                      property.availability_end])
+                      property.availability_end,
+                      property.user_id])
     return result[0]["id"]
   end
 
