@@ -25,5 +25,8 @@ RSpec.describe UsersTable do
     )
     id_1 = users_table.add(users_entity_1)
     expect(users_table.list[0].username).to eq("360_NOSCOPEXXX69")
+    expect(users_table.list[0].password).to eq("no_u")
+    expect(users_table.list[0].contact).to eq("07548456789")
+    expect(users_table.list[0].email).to eq("joemama@gmail.com")
   end
 end
