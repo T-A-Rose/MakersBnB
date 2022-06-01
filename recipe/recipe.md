@@ -4,18 +4,19 @@
 
 1. The client has requested that they can add a new space to be booked.
 Requirements: The user has to have signed up to the site in order to add a space which can be booked.
-
+01/06/2022 - Authentication missing
 
 2. The client has requested that they're able to add more than one property to their account.
 Requirement: The user should be able to add any number of properties available to be booked.
-
+01/06/2022 13:39 - I need to add a foreign key to the property table with that references the user id
 
 3. Users should be able to name their space, provide a short description of the space and a price per night
 Requirements: The user wants to be able to name their space, provide a short description of the space and a price per night.
-
+DONE
 
 4. Users should be able to offer a range of dates when their space is available to book
 Requirements: Have a date selector that will show when the property is available to be booked.
+DONE
 
 5. Any signed up user can request to hire any space for one night, and this has to be approved by the user that owns the space
 Requirements: Once the owner receives a booking request, they have to approve the booking before the property is booked.
