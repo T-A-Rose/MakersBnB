@@ -30,6 +30,7 @@ class PropertiesTable
              price: row["price"],
              availability_start: row["availability_start"],
              availability_end: row["availability_end"],
+             user_id: row["user_id"],
            )
   end
 end

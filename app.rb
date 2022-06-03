@@ -1,7 +1,7 @@
 # These lines load Sinatra and a helper tool to reload the server
 # when we have changed the file.
-require 'sinatra/base'
-require 'sinatra/reloader'
+require "sinatra/base"
+require "sinatra/reloader"
 
 # You will want to require your data model class here
 require "database_connection"
@@ -10,6 +10,10 @@ require "animal_entity"
 require "properties_entity"
 require "properties_table"
 require "date_handler"
+
+#require_relative "controllers/app_controller"
+#require_relative "controllers/home_controller"
+#require_relative "controllers/registration_controller"
 
 class WebApplicationServer < Sinatra::Base
   # This line allows us to send HTTP Verbs like `DELETE` using forms
@@ -44,61 +48,60 @@ class WebApplicationServer < Sinatra::Base
 
   # YOUR CODE GOES BELOW THIS LINE
 
-  get '/Makersbnb' do
+  get "/Makersbnb" do
     erb :makersbnb_login, locals: { properties: makersbnb_table.list }
   end
 
-  get '/Makersbnb/new_user' do
+  get "/Makersbnb/new_user" do
     erb :new_user
   end
 
-  post '/Makersbnb' do
-    properties_entity = PropertiesEntity.new(property_name: params[:property_name], 
-    description: params[:description],
-    price: params[:price], 
-    availability_start: params[:availability_start],
-    availability_end: params[:availability_end])
+  post "/Makersbnb" do
+    properties_entity = PropertiesEntity.new(property_name: params[:property_name],
+                                             description: params[:description],
+                                             price: params[:price],
+                                             availability_start: params[:availability_start],
+                                             availability_end: params[:availability_end])
     makersbnb_table.add(properties_entity)
-    redirect '/Makersbnb'
+    redirect "/Makersbnb"
   end
 
-  get '/Makersbnb/new_property' do
+  get "/Makersbnb/new_property" do
     erb :new_property
   end
 
-
   # EXAMPLE ROUTES
 
-  get '/animals' do
+  get "/animals" do
     erb :animals_index, locals: { animals: animals_table.list }
   end
 
-  get '/animals/new' do
+  get "/animals/new" do
     erb :animals_new
   end
 
-  post '/animals' do
+  post "/animals" do
     animal = AnimalEntity.new(params[:species])
     animals_table.add(animal)
-    redirect '/animals'
+    redirect "/animals"
   end
 
-  delete '/animals/:index' do
+  delete "/animals/:index" do
     animals_table.remove(params[:index].to_i)
-    redirect '/animals'
+    redirect "/animals"
   end
 
-  get '/animals/:index/edit' do
+  get "/animals/:index/edit" do
     animal_index = params[:index].to_i
     erb :animals_edit, locals: {
-      index: animal_index,
-      animal: animals_table.get(animal_index)
-    }
+                         index: animal_index,
+                         animal: animals_table.get(animal_index),
+                       }
   end
 
-  patch '/animals/:index' do
+  patch "/animals/:index" do
     animal_index = params[:index].to_i
     animals_table.update(animal_index, params[:species])
-    redirect '/animals'
+    redirect "/animals"
   end
 end
