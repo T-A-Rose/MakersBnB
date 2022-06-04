@@ -3,6 +3,10 @@
 require "sinatra/base"
 require "sinatra/reloader"
 
+####AUTHENTICATION####
+require "sinatra/activerecord"
+######################
+
 # You will want to require your data model class here
 require "database_connection"
 require "animals_table"
@@ -10,6 +14,8 @@ require "animal_entity"
 require "properties_entity"
 require "properties_table"
 require "date_handler"
+require "users_entity"
+require "users_table"
 
 #require_relative "controllers/app_controller"
 #require_relative "controllers/home_controller"
@@ -23,6 +29,12 @@ class WebApplicationServer < Sinatra::Base
     # In development mode (which you will be running) this enables the tool
     # to reload the server when your code changes
     register Sinatra::Reloader
+
+    ####AUTHENTICATION#####
+    register Sinatra::ActiveRecordExtension
+    #set :root.File.dirname(File.expand_path("..", __FILE__))
+    enable :sessions
+    #######################
 
     # In development mode, connect to the development database
     db = DatabaseConnection.new("localhost", "web_application_dev")
@@ -39,21 +51,54 @@ class WebApplicationServer < Sinatra::Base
     $global[:animals_table] ||= AnimalsTable.new($global[:db])
   end
 
-  def makersbnb_table
-    $global[:makersbnb_table] ||= PropertiesTable.new($global[:db])
+  def properties_table
+    $global[:properties_table] ||= PropertiesTable.new($global[:db])
   end
 
+  def users_table
+    $global[:users_table] ||= UsersTable.new($global[:db])
+  end
+
+  ####AUTHENTICATION#####
+  def current_user
+    User.find_by(id: session[:user_id])
+  end
+
+  #######################
   # Start your server using `rackup`.
   # It will sit there waiting for requests. It isn't broken!
 
   # YOUR CODE GOES BELOW THIS LINE
 
   get "/Makersbnb" do
-    erb :makersbnb_login, locals: { properties: makersbnb_table.list }
+    #erb :makersbnb_login, locals: { properties: makersbnb_table.list }
+    erb :makersbnb_login
   end
 
   get "/Makersbnb/new_user" do
     erb :new_user
+  end
+
+  post "/Makersbnb/registrations" do
+    users_entity = UsersEntity.new(username: params[:username],
+                                   password: params[:password],
+                                   contact: params[:contact],
+                                   email: params[:email])
+    ####AUTHENTICATION#### #It shouldnt get the id from here but when it logs in
+    users_table.add(users_entity)
+    #session[:user_id] = @user_id
+    ######################
+    redirect "/Makersbnb"
+  end
+
+  get "/Makersbnb/:index" do
+    session[:user_id] = users_table.get_user(
+      username: params[:username],
+      password: params[:password],
+    )
+
+    #i need a get method for the user_table class to get the id based on username and password
+    erb :index #, locals: { index: session[:user_id] }
   end
 
   post "/Makersbnb" do
@@ -62,7 +107,7 @@ class WebApplicationServer < Sinatra::Base
                                              price: params[:price],
                                              availability_start: params[:availability_start],
                                              availability_end: params[:availability_end])
-    makersbnb_table.add(properties_entity)
+    properties_table.add(properties_entity)
     redirect "/Makersbnb"
   end
 
