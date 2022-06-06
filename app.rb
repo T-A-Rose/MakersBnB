@@ -24,6 +24,7 @@ require "users_table"
 class WebApplicationServer < Sinatra::Base
   # This line allows us to send HTTP Verbs like `DELETE` using forms
   use Rack::MethodOverride
+  use Rack::Session::Pool, :expire_after => 2592000
 
   configure :development do
     # In development mode (which you will be running) this enables the tool
@@ -100,33 +101,29 @@ class WebApplicationServer < Sinatra::Base
       redirect "/Makersbnb"
     else
       session[:user_id] = user_id
-      #why do we need the session id then?
-      @session_id = session[:user_id]
       redirect "/Makersbnb/:user_id/listings"
     end
   end
 
   get "/Makersbnb/:user_id/listings" do
-    user_id = @session_id
-    erb :listings, locals: { index: @session_id,
+    erb :listings, locals: { user_id: session[:user_id],
                              properties: properties_table.list }
   end
 
-  post "/Makersbnb" do #is this /makersbnb/listings or /makersbnb/:index/listings?
+  get "/Makersbnb/:user_id/new_property" do
+    erb :new_property, locals: { user_id: session[:user_id] }
+  end
+
+  post "/Makersbnb/:user_id/listings" do #is this /makersbnb/listings or /makersbnb/:index/listings?
     #get the user_id here from the session and pass it to properties when initializing
     properties_entity = PropertiesEntity.new(property_name: params[:property_name],
                                              description: params[:description],
                                              price: params[:price],
                                              availability_start: params[:availability_start],
-                                             availability_end: params[:availability_end]
- #user_id: session[user_id]
-      )
+                                             availability_end: params[:availability_end],
+                                             user_id: session[:user_id])
     properties_table.add(properties_entity)
-    redirect "/Makersbnb"
-  end
-
-  get "/Makersbnb/new_property" do
-    erb :new_property
+    redirect "/Makersbnb/:user_id/listings"
   end
 
   # EXAMPLE ROUTES

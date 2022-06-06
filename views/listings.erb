@@ -3,10 +3,11 @@ body {
   background-image: url('https://wallpaperaccess.com/full/1347632.jpg');
 }
 </style>
+
 <div style="width: 600px">
 <div id="container" style="text-align:right; width: 350px">
 
-  <a href="/Makersbnb/:user_id/listings" id="new_property" >List a new space</a>
+  <a href="/Makersbnb/:user_id/new_property" id="new_property" >List a new space</a>
 </div>
 <% properties.each do |property| %>
   <h3><% property.property_name %></h3>
