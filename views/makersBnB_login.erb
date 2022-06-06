@@ -1,19 +1,19 @@
-<h1 style = "text-align: center;">List your advert here!</h1>
-
 <% if properties.empty? %>
+  <h1 style = "text-align: center;">List your advert here!</h1>
   There are no logins currently, would you like to create one?
     <p>
-      <a href="/Makersbnb/new_property">
+      <a href="/Makersbnb/new_user">
         <button> Signup here </button>
       </a>
     </p>
 <%else%>
+  <u><h1 style = "text-align: center;"> Current properties available to book</h1>
   <% properties.each_with_index do |listing| %>
   <article>
-    <u><h2 style ="text-align: center;">Current Properties" </h2>
-    <u><h4> Property name</u>: <%= listing.property_name %> </h4>
-    <u><h4> Propety description</u>: <%= listing.description%> </h4>
-    <u><h4> Property price</u>: <%= listing.price %> </h4>
+    <u><h2 style ="text-align: center;"><%= listing.property_name %>! </h2>
+    <h4><u> Property name</u>: <%= listing.property_name %></h4>
+    <u><h4> Propety description</u>: <%= listing.description%></h4>
+    <u><h4> Property price</u>: <%= listing.price %></h4>
 
     <p>
       <a href="/MakersBnB/<%= listing.id %>/booking">
