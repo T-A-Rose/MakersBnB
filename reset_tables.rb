@@ -6,11 +6,11 @@ def reset_tables(db)
   db.run("DROP TABLE IF EXISTS properties;")
   db.run("CREATE TABLE properties (
     id SERIAL PRIMARY KEY,
-    property_name TEXT NOT NULL,
-    description TEXT NOT NULL,
-    price FLOAT NOT NULL, 
-    availability_start DATE NOT NULL, 
-    availability_end DATE NOT NULL
+    property_name TEXT NULL,
+    description TEXT NULL,
+    price FLOAT NULL, 
+    availability_start DATE NULL, 
+    availability_end DATE NULL
     );")
 
   db.run("DROP TABLE IF EXISTS users;")
