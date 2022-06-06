@@ -4,6 +4,7 @@ class PropertiesTable
   end
 
   def add(property)
+    #add failsafe for user_id
     result = @db.run("INSERT INTO properties 
     (property_name, description, price, availability_start, availability_end, user_id) 
     VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;",

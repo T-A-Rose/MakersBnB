@@ -101,7 +101,7 @@ class WebApplicationServer < Sinatra::Base
       redirect "/Makersbnb"
     else
       session[:user_id] = user_id
-      redirect "/Makersbnb/:user_id/listings"
+      redirect "/Makersbnb/#{session[:user_id]}/listings"
     end
   end
 
@@ -124,6 +124,11 @@ class WebApplicationServer < Sinatra::Base
                                              user_id: session[:user_id])
     properties_table.add(properties_entity)
     redirect "/Makersbnb/:user_id/listings"
+  end
+
+  get "/sign-out" do
+    session.clear
+    redirect "/Makersbnb"
   end
 
   # EXAMPLE ROUTES
