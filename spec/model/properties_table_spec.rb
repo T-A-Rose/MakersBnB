@@ -39,6 +39,7 @@ RSpec.describe PropertiesTable do
       price: "78",
       availability_start: fake_date_1.format,
       availability_end: fake_date_2.format,
+      user_id: user_id_1,
     )
     properties_entity_2 = PropertiesEntity.new(
       property_name: "Openbet residency",

@@ -13,6 +13,7 @@ def reset_tables(db)
 
   db.run("DROP TABLE IF EXISTS properties;")
   db.run("CREATE TABLE properties (
+      id SERIAL PRIMARY KEY,
       property_name TEXT NOT NULL,
       description TEXT NOT NULL,
       price FLOAT NOT NULL, 
@@ -20,7 +21,6 @@ def reset_tables(db)
       availability_end DATE NOT NULL,
       user_id INT REFERENCES users(id)
       );")
-  #id SERIAL PRIMARY KEY,
 end
 
 #CONSTRAINT id_of_user FOREIGN KEY(user_id) REFERENCES users(id)
