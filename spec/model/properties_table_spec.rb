@@ -46,6 +46,7 @@ RSpec.describe PropertiesTable do
       price: "85",
       availability_start: fake_date_3.format,
       availability_end: fake_date_4.format,
+      user_id: user_id_1,
     )
 
     id_1 = properties_table.add(properties_entity_1)
