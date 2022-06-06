@@ -11,6 +11,7 @@ class UsersTable
            end
   end
 
+  # This is only here just in case, if not used at the end, delete it
   def list_by_id(id)
     return @db.run("SELECT * FROM users WHERE id=$1;", [id])
   end
@@ -18,18 +19,19 @@ class UsersTable
   def add(user)
     result = @db.run("INSERT INTO users 
     (username, password, contact, email)
-    VALUES ($1, $2, $3, $4) RETURNING id;",
+    VALUES ($1, $2, $3, $4) ;",
                      [user.username,
                       user.password,
                       user.contact,
                       user.email])
-    return result[0]["id"]
   end
 
   def get_user(username:, password:)
-    @db.run("SELECT * FROM users WHERE username=$1 AND password=$2 RETURNING id;", [username, password])
-    if result[0]["id"] == nil
-      return "Your username or password was entered incorrectly."
+    result = @db.run("SELECT * FROM users WHERE username=$1 AND password=$2;", [username, password])
+    # The problem here is that if there are no results it gives me index 0 is out of range. how do i refer to it?
+    #if result[0]["id"] == nil
+    if result.to_a.length < 1
+      return false
     else
       return result[0]["id"]
     end

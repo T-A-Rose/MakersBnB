@@ -19,10 +19,11 @@ def reset_tables(db)
     price FLOAT NOT NULL, 
     availability_start DATE NOT NULL, 
     availability_end DATE NOT NULL,
-    user_id INT NOT NULL,
-    CONSTRAINT id_of_user FOREIGN KEY(user_id) REFERENCES users(id)
+    user_id INT REFERENCES users(id)
     );")
 end
+
+#CONSTRAINT id_of_user FOREIGN KEY(user_id) REFERENCES users(id)
 
 dev_db = DatabaseConnection.new("localhost", "web_application_dev")
 reset_tables(dev_db)

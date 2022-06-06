@@ -2,7 +2,7 @@ require "date_handler"
 
 class PropertiesEntity
   # This will need a separate register property erb page
-  def initialize(id: nil, property_name:, description:, price:, availability_start:, availability_end:, user_id:)
+  def initialize(id: nil, property_name:, description:, price:, availability_start:, availability_end:, user_id: nil)
     #id is nil since the DB creates it as a serial field
 
     @id = id

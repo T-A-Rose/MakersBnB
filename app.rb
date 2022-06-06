@@ -20,7 +20,7 @@ require "users_table"
 #require_relative "controllers/app_controller"
 #require_relative "controllers/home_controller"
 #require_relative "controllers/registration_controller"
-
+#session secret
 class WebApplicationServer < Sinatra::Base
   # This line allows us to send HTTP Verbs like `DELETE` using forms
   use Rack::MethodOverride
@@ -72,11 +72,11 @@ class WebApplicationServer < Sinatra::Base
 
   get "/Makersbnb" do
     #erb :makersbnb_login, locals: { properties: makersbnb_table.list }
-    erb :makersbnb_login
+    erb :makersbnb
   end
 
-  get "/Makersbnb/new_user" do
-    erb :new_user
+  get "/Makersbnb/sessions/new" do
+    erb :login
   end
 
   post "/Makersbnb/registrations" do
@@ -91,22 +91,36 @@ class WebApplicationServer < Sinatra::Base
     redirect "/Makersbnb"
   end
 
-  get "/Makersbnb/:index" do
-    session[:user_id] = users_table.get_user(
+  post "/Makersbnb/sessions" do
+    user_id = users_table.get_user(
       username: params[:username],
       password: params[:password],
     )
-
-    #i need a get method for the user_table class to get the id based on username and password
-    erb :index #, locals: { index: session[:user_id] }
+    if user_id == false
+      redirect "/Makersbnb"
+    else
+      session[:user_id] = user_id
+      #why do we need the session id then?
+      @session_id = session[:user_id]
+      redirect "/Makersbnb/:user_id/listings"
+    end
   end
 
-  post "/Makersbnb" do
+  get "/Makersbnb/:user_id/listings" do
+    user_id = @session_id
+    erb :listings, locals: { index: @session_id,
+                             properties: properties_table.list }
+  end
+
+  post "/Makersbnb" do #is this /makersbnb/listings or /makersbnb/:index/listings?
+    #get the user_id here from the session and pass it to properties when initializing
     properties_entity = PropertiesEntity.new(property_name: params[:property_name],
                                              description: params[:description],
                                              price: params[:price],
                                              availability_start: params[:availability_start],
-                                             availability_end: params[:availability_end])
+                                             availability_end: params[:availability_end]
+ #user_id: session[user_id]
+      )
     properties_table.add(properties_entity)
     redirect "/Makersbnb"
   end
