@@ -1,19 +1,43 @@
 <style>
 body {
   background-image: url('https://wallpaperaccess.com/full/1347632.jpg');
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+h3 {
+  color: red;
+}
+h2 {
+  color: Tomato;
+}
+article {
+  border: solid;
+  border-radius: 25px;
+  border-color: orange;
+  border-collapse: collapse;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
 }
 </style>
 
-<div style="width: 600px">
-<div id="container" style="text-align:right; width: 350px">
-  <a href="/sign-out" id="sign-out">Sign out</a>
-  <a href="/Makersbnb/new_property" id="new_property" >List a new space</a>
-</div>
-<% properties.each do |property| %>
-  <h3><%= property.property_name %></h3>
-  <p><%= property.description %></p>
-  <p><%= property.price %>£/night</p>
-  <p><%= property.availability_start %></p>
-  <p><%= property.availability_end %></p>
-<% end %> 
+
+  <div style="width: 600px">
+  <div id="container" style="text-align:right; width: 350px" style="border:1px solid black;">
+    <a href="/sign-out" style="text-align:right; id="sign-out>Sign out</a>
+    <a href="/Makersbnb/new_property" id="new_property" >List a new space</a>
+  </div>
+  <% properties.each do |property| %>
+  <article>
+    <u><h2 style ="text-align: center;"><%= property.property_name %></h2></u>
+
+    <p><u>Description</u>: <%= property.description %></p>
+    <p><u>Price/night</u>: <%= property.price %></p>
+    <p><u>Available from</u>: <%= property.availability_start %></p>
+    <p><u>Available till</u>: <%= property.availability_end %></p>
+  </article> 
+  <% end %>
 </div>
