@@ -1,6 +1,7 @@
 require "users_entity"
+require "bcrypt"
 
-class UsersTable
+class UsersTable < ActiveRecord::Base
   def initialize(db)
     @db = db
   end

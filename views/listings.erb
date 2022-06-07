@@ -1,19 +1,69 @@
 <style>
 body {
   background-image: url('https://wallpaperaccess.com/full/1347632.jpg');
+  text-align: left;
+  margin: 0px auto;
+}
+
+#container1 {
+  margin: 0px auto;
+  background-color: #3b3635;
+  border-radius: 10px;
+}
+
+#container2 {
+  margin: 0px auto;
+  display: inline-block;
+}
+
+#new_property, #sign_out {
+  width: 150px;
+  height: 30px;
+  padding: 5px;
+  margin: 0px auto;
+}
+
+#listings {
+  text-align: left;
+  padding: 50px;
+}
+
+h3 {
+  text-align: center;
+  padding: 5px;
+  border-radius: 25px;
+  border: 2px solid #73AD21;
+  background-color: #ffb300;
+  color: #212121
 }
 </style>
 
-<div style="width: 600px">
-<div id="container" style="text-align:right; width: 350px">
-  <a href="/sign-out" id="sign-out">Sign out</a>
-  <a href="/Makersbnb/new_property" id="new_property" >List a new space</a>
+<div id="container1">
+<div id="container2">
+<table>
+<form method="GET" action="/Makersbnb/new_property">
+  <input type="submit" id ="new_property" value="List a new space">
+</form>
+
+<form method="GET" action="/sign-out">
+  <input type="submit" id ="sign_out" value="Sign out">
+</form>
 </div>
+
+<div id="listings">
+<% if properties.length < 1 %>
+  <h4>Unfortunately there are no spaces available!</h4>
+<% else %>
+<hr>
 <% properties.each do |property| %>
-  <h3><%= property.property_name %></h3>
-  <p><%= property.description %></p>
-  <p><%= property.price %>£/night</p>
-  <p><%= property.availability_start %></p>
-  <p><%= property.availability_end %></p>
+    <h3><%= property.property_name %></h3>
+    <p><i><%= property.description %></i></p>
+    <p><u><b>Price:</b></u> <%= property.price %> £/night</p>
+    <p><b>From: </b><%= property.availability_start %>&nbsp&nbsp&nbsp&nbsp<b>To:</b>
+      <%= property.availability_end %></p>
+    <button class="space_booking" style="margin: 0px auto;">Book this space</button>
+    <hr>
+  <% end %>
 <% end %> 
+</div>
 </div>

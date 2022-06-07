@@ -1,13 +1,55 @@
+<style>
+body {
+  background-image: url('https://wallpaperaccess.com/full/1347632.jpg');
+  text-align: center;
+  margin: 0px auto;
+}
+
+#container1 {
+  margin: 0px auto;
+  background-color: #3b3635;
+  padding: 10px;
+}
+
+#container2 {
+  margin: 0px auto;
+  display: inline-block;
+}
+
+#new_property, #sign_out {
+  width: 150px;
+  height: 30px;
+  padding: 5px;
+  margin: 0px auto;
+}
+
+#listings {
+  text-align: left;
+  padding: 50px;
+}
+
+h3 {
+  text-align: center;
+  padding: 5px;
+  border-radius: 25px;
+  border: 2px solid #73AD21;
+  background-color: #ffb300;
+  color: #212121
+}
+
+</style>
+
+<div id="container1">
 <h1> Add your property to MakersBnB today! </h1>
 
 <form action ="/Makersbnb/listings" method="POST">
   <p>
-    <label for="property_name">Property name!</label>
+    <label for="property_name">Property name:</label>
     <br>
     <input type="text" id="property_name" name="property_name">
   </p>
   <p>
-    <label for="description">description:</label>
+    <label for="description">Description:</label>
     <br>
     <input type="text" id="description" name="description">
   </p>
@@ -17,15 +59,16 @@
     <input type="text" id="price" name="price">
   </p>
   <p>
-    <label for="availability_start">Booking from</label>
+    <label for="availability_start">Booking from:</label>
     <br>
     <input type="date" id="availability_start" name="availability_start">
   </p>
   <p>
-    <label for="availability_end">Booking end</label>
+    <label for="availability_end">Booking end:</label>
     <br>
     <input type="date" id="availability_end" name="availability_end">
   </p>
 
   <input type="submit" value="Add listing" name="add">
 </form>
+</div>
