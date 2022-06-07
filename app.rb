@@ -2,10 +2,7 @@
 # when we have changed the file.
 require "sinatra/base"
 require "sinatra/reloader"
-
-####AUTHENTICATION####
 require "sinatra/activerecord"
-######################
 
 # You will want to require your data model class here
 require "database_connection"
@@ -13,29 +10,20 @@ require "animals_table"
 require "animal_entity"
 require "properties_entity"
 require "properties_table"
-require "date_handler"
 require "users_entity"
 require "users_table"
 
-#require_relative "controllers/app_controller"
-#require_relative "controllers/home_controller"
-#require_relative "controllers/registration_controller"
 #session secret
 class WebApplicationServer < Sinatra::Base
   # This line allows us to send HTTP Verbs like `DELETE` using forms
   use Rack::MethodOverride
-  use Rack::Session::Pool, :expire_after => 2592000
 
   configure :development do
     # In development mode (which you will be running) this enables the tool
     # to reload the server when your code changes
     register Sinatra::Reloader
-
-    ####AUTHENTICATION#####
     register Sinatra::ActiveRecordExtension
-    #set :root.File.dirname(File.expand_path("..", __FILE__))
     enable :sessions
-    #######################
 
     # In development mode, connect to the development database
     db = DatabaseConnection.new("localhost", "web_application_dev")
@@ -60,19 +48,12 @@ class WebApplicationServer < Sinatra::Base
     $global[:users_table] ||= UsersTable.new($global[:db])
   end
 
-  ####AUTHENTICATION#####
-  def current_user
-    User.find_by(id: session[:user_id])
-  end
-
-  #######################
   # Start your server using `rackup`.
   # It will sit there waiting for requests. It isn't broken!
 
   # YOUR CODE GOES BELOW THIS LINE
 
   get "/Makersbnb" do
-    #erb :makersbnb_login, locals: { properties: makersbnb_table.list }
     erb :makersbnb
   end
 
@@ -85,10 +66,7 @@ class WebApplicationServer < Sinatra::Base
                                    password: params[:password],
                                    contact: params[:contact],
                                    email: params[:email])
-    ####AUTHENTICATION#### #It shouldnt get the id from here but when it logs in
     users_table.add(users_entity)
-    #session[:user_id] = @user_id
-    ######################
     redirect "/Makersbnb"
   end
 
@@ -101,21 +79,20 @@ class WebApplicationServer < Sinatra::Base
       redirect "/Makersbnb"
     else
       session[:user_id] = user_id
-      redirect "/Makersbnb/#{session[:user_id]}/listings"
+      redirect "/Makersbnb/listings"
     end
   end
 
-  get "/Makersbnb/:user_id/listings" do
+  get "/Makersbnb/listings" do
     erb :listings, locals: { user_id: session[:user_id],
                              properties: properties_table.list }
   end
 
-  get "/Makersbnb/:user_id/new_property" do
+  get "/Makersbnb/new_property" do
     erb :new_property, locals: { user_id: session[:user_id] }
   end
 
-  post "/Makersbnb/:user_id/listings" do #is this /makersbnb/listings or /makersbnb/:index/listings?
-    #get the user_id here from the session and pass it to properties when initializing
+  post "/Makersbnb/listings" do
     properties_entity = PropertiesEntity.new(property_name: params[:property_name],
                                              description: params[:description],
                                              price: params[:price],
@@ -123,7 +100,7 @@ class WebApplicationServer < Sinatra::Base
                                              availability_end: params[:availability_end],
                                              user_id: session[:user_id])
     properties_table.add(properties_entity)
-    redirect "/Makersbnb/:user_id/listings"
+    redirect "/Makersbnb/listings"
   end
 
   get "/sign-out" do

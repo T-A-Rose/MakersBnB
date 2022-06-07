@@ -32,7 +32,8 @@ RSpec.describe PropertiesTable do
       email: "joemama@gmail.com",
     )
 
-    user_id_1 = users_table.add(users_entity_1)
+    user_id_1 = users_table.add(users_entity_1).to_i
+
     properties_entity_1 = PropertiesEntity.new(
       property_name: "Makers dungeon",
       description: "Duckie is the prison warden and (s)he does not go easy on you",
@@ -50,15 +51,19 @@ RSpec.describe PropertiesTable do
       user_id: user_id_1,
     )
 
-    id_1 = properties_table.add(properties_entity_1)
-    id_2 = properties_table.add(properties_entity_2)
+    properties_table.add(properties_entity_1)
+    properties_table.add(properties_entity_2)
 
     expect(properties_table.list[0].property_name).to eq("Makers dungeon")
     expect(properties_table.list[0].description).to eq("Duckie is the prison warden and (s)he does not go easy on you")
     expect(properties_table.list[0].price).to eq("78")
     expect(properties_table.list[0].availability_start).to eq("2022-04-20")
     expect(properties_table.list[0].availability_end).to eq("2022-06-25")
-    #Last test taken out until it updates instead of inserting it at declaration
-    #expect(properties_table.list[0].user_id).to eq(user_id_1)
+
+    expect(properties_table.list[1].property_name).to eq("Openbet residency")
+    expect(properties_table.list[1].description).to eq("Very nice area, very expensive, very empty")
+    expect(properties_table.list[1].price).to eq("85")
+    expect(properties_table.list[1].availability_start).to eq("2021-12-25")
+    expect(properties_table.list[1].availability_end).to eq("2023-08-25")
   end
 end

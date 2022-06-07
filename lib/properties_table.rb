@@ -1,5 +1,5 @@
 class PropertiesTable
-  def initialize(db) #db is the db connection provided from database_connection.rb
+  def initialize(db)
     @db = db
   end
 
@@ -17,14 +17,8 @@ class PropertiesTable
     return result[0]["id"]
   end
 
-  def update_user_id(property:, id:)
-    @db.run("UPDATE properties SET user_id =$1")
-  end
-
-  def list()
-    return @db.run("SELECT * FROM properties ORDER BY id;").map do |row|
-             row_to_object(row)
-           end
+  def list
+    return @db.run("SELECT * FROM properties ORDER BY id;").map { |row| row_to_object(row) }
   end
 
   def row_to_object(row)

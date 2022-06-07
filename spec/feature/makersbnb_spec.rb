@@ -7,7 +7,7 @@ RSpec.describe "Makersbnb features", type: :feature do
     DatabaseHelpers.clear_table("properties")
   end
 
-  it("creates an account, logs in and creates a listing") do
+  it("creates an account, logs in and creates a listing then logs out") do
     visit "/Makersbnb"
     fill_in "username", with: "Testing"
     fill_in "password", with: "testing"
@@ -26,7 +26,16 @@ RSpec.describe "Makersbnb features", type: :feature do
     fill_in "availability_start", with: "02/03/2022"
     fill_in "availability_end", with: "12/05/2022"
     click_button "add"
+
     expect(page).to have_content "List a new space"
+    expect(page).to have_content "Test Space"
+    expect(page).to have_content "Test description"
+    expect(page).to have_content "49"
+    expect(page).to have_content "02-03-2022"
+    expect(page).to have_content "12-05-2022"
+
+    click_link "sign-out"
+    expect(page).to have_content("Welcome!")
   end
 
   it("fails to log in and redirects to main page") do
