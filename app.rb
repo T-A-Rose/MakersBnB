@@ -6,8 +6,6 @@ require "sinatra/activerecord"
 
 # You will want to require your data model class here
 require "database_connection"
-require "animals_table"
-require "animal_entity"
 require "properties_entity"
 require "properties_table"
 require "users_entity"
@@ -106,40 +104,5 @@ class WebApplicationServer < Sinatra::Base
   get "/sign-out" do
     session.clear
     redirect "/Makersbnb"
-  end
-
-  # EXAMPLE ROUTES
-
-  get "/animals" do
-    erb :animals_index, locals: { animals: animals_table.list }
-  end
-
-  get "/animals/new" do
-    erb :animals_new
-  end
-
-  post "/animals" do
-    animal = AnimalEntity.new(params[:species])
-    animals_table.add(animal)
-    redirect "/animals"
-  end
-
-  delete "/animals/:index" do
-    animals_table.remove(params[:index].to_i)
-    redirect "/animals"
-  end
-
-  get "/animals/:index/edit" do
-    animal_index = params[:index].to_i
-    erb :animals_edit, locals: {
-                         index: animal_index,
-                         animal: animals_table.get(animal_index),
-                       }
-  end
-
-  patch "/animals/:index" do
-    animal_index = params[:index].to_i
-    animals_table.update(animal_index, params[:species])
-    redirect "/animals"
   end
 end
