@@ -1,12 +1,13 @@
 class PropertiesTable
-  def initialize(db) #db is the db connection provided from database_connection.rb
+  def initialize(db)
     @db = db
   end
 
   def add(property)
+    #add failsafe for user_id
     result = @db.run("INSERT INTO properties 
     (property_name, description, price, availability_start, availability_end, user_id) 
-    VALUES ($1, $2, $3, $4, $5, $6) RETURNING property_name;",
+    VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;",
                      [property.property_name,
                       property.description,
                       property.price,
@@ -16,14 +17,8 @@ class PropertiesTable
     return result[0]["id"]
   end
 
-  def update_user_id(property:, id:)
-    @db.run("UPDATE properties SET user_id =$1")
-  end
-
-  def list()
-    return @db.run("SELECT * FROM properties ORDER BY id;").map do |row|
-             row_to_object(row)
-           end
+  def list
+    return @db.run("SELECT * FROM properties ORDER BY id;").map { |row| row_to_object(row) }
   end
 
   def row_to_object(row)

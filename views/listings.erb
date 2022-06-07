@@ -6,14 +6,14 @@ body {
 
 <div style="width: 600px">
 <div id="container" style="text-align:right; width: 350px">
-
-  <a href="/Makersbnb/:user_id/new_property" id="new_property" >List a new space</a>
+  <a href="/sign-out" id="sign-out">Sign out</a>
+  <a href="/Makersbnb/new_property" id="new_property" >List a new space</a>
 </div>
 <% properties.each do |property| %>
-  <h3><% property.property_name %></h3>
-  <p><% property.description %></p>
-  <p><% property.price %>£/night</p>
-  <p><% property.availability_start %></p>
-  <p><% property.availability_end %></p>
+  <h3><%= property.property_name %></h3>
+  <p><%= property.description %></p>
+  <p><%= property.price %>£/night</p>
+  <p><%= property.availability_start %></p>
+  <p><%= property.availability_end %></p>
 <% end %> 
 </div>
